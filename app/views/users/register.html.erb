@@ -57,7 +57,7 @@
 
       <p class="title-description">您正在注册本站独立帐号，我们推荐您使用第三方帐号登录</p>
 
-      <form class="session-form" action="http://segmentfault.com/user/register/post?_=bcd957ef0e0c5005508e1a28797979e8" method="post">
+      <form class="session-form" action="http://segmentfault.com/user/register/post?_=79e1433f2b1f877190e0268fc92d9967" method="post">
         <div class="session-aside">
           如果您有下列网站帐号，可使用这些帐号<a href="http://segmentfault.com/user/login">直接登录</a>，无需注册
           <a style="display: block; margin-top: 6px; text-decoration: none;" href="http://segmentfault.com/user/login">
@@ -133,7 +133,9 @@
       <dl class="col-sm-4 site-link" id="license">
         <dt>内容许可</dt>
         <dd>除特别说明外，用户内容均采用 <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a> 进行许可</dd>
-        <dd>本站由 <a target="_blank" href="http://elinkhost.com/">Elinkhost</a> 提供 IDC 服务<br><a target="_blank" href="https://www.upyun.com/?utm_source=segmentfault&amp;utm_medium=link&amp;utm_campaign=upyun&amp;md=segmentfault">又拍云</a> 提供 CDN 存储服务</dd>
+        <dd>本站由 <a target="_blank" href="http://elinkhost.com/">Elinkhost</a> 提供 IDC
+          服务<br><a target="_blank" href="https://www.upyun.com/?utm_source=segmentfault&amp;utm_medium=link&amp;utm_campaign=upyun&amp;md=segmentfault">又拍云</a> 提供 CDN 存储服务
+        </dd>
       </dl>
     </div>
     <div class="copyright">
@@ -149,19 +151,6 @@
     <div class="row">
       <div class="text-center col-md-6">
 <pre>
-                             _   _
-   _______________          |*\_/*|________
-  |  ___________  |        ||_/-\_|______  |
-  | |           | |        | |           | |
-  | |   0   0   | |        | |   0   0   | |
-  | |     -     | |        | |     -     | |
-  | |   \___/   | |        | |   \___/   | |
-  | |___     ___| |        | |___________| |
-  |_____|\_/|_____|        |_______________|
-    _|__|/ \|_|_.............._|________|_
-   / ********** \            / ********** \
- /  ************  \        /  ************  \
---------------------      --------------------
 </pre>
       </div>
       <div class="col-md-6">
@@ -218,8 +207,7 @@
     $(document).scroll(function () {
         if ($(this).scrollTop() > 720) {
             $('#backtop').removeClass('hidden');
-        }
-        else{
+        } else {
             $('#backtop').addClass('hidden');
         }
     });
@@ -273,13 +261,11 @@
     if (login) {
         $('#main, .layout-main').highlightTag({url: 'http://x.segmentfault.com/tag/following', selector: '#content article .meta-tags li a, #user-question article .meta-tags li a,'
                 + ' .article-item .tags li a', className: 'q-highlight'});
-    }
-    else if (0 == $('.auth-login,.session-form,.session-finished').length) {
+    } else if (0 == $('.auth-login,.session-form,.session-finished').length) {
         if (1 != $.cookie('sfln_viewed')) {
             $.cookie('sfln_viewed', 1, {path: '/'});
             $.cookie('sfln_available', 1, {path: '/'});
-        }
-        else if (1 == $.cookie('sfln_available')) {
+        } else if (1 == $.cookie('sfln_available')) {
             $('.i-cancel', $('.login-notify').css('bottom', -60).removeClass('hidden').animate({'bottom': 0})).click(function () {
                 $.cookie('sfln_available', 0, {path: '/'});
                 $(this).parents('.login-notify').animate({'bottom': -60}, function () {
@@ -287,8 +273,7 @@
                 })
                 return false;
             });
-        }
-        else if (0 == $.cookie('sfln_available')) {
+        } else if (0 == $.cookie('sfln_available')) {
             $('.login-notify').css({'padding': '10px 0', 'text-align': 'center', 'bottom': -80}).html('<div class="row find-more-world">一寸代码一寸血，十万开发十万军 <a id="login-link" href="http://segmentfault.com/user/login">加入我们</a> 创造属于开发者的时代</div>').animate({'bottom': 0});
         }
     }
@@ -297,8 +282,7 @@
         if (!tagInterestShow) {
             $('.tag-interest-list').fadeIn();
             tagInterestShow = true;
-        }
-        else{
+        } else {
             $('.tag-interest-list').fadeOut();
             tagInterestShow = false;
         }
@@ -347,7 +331,6 @@
             })
         })
     }
-    window.console && window.console.info('   __   __________________\n _//]| | QQ 群: 206236214 |\n|____|-|__________________|  老司机~带带我~~~\n  O      OO         OO OO');
 });
 </script>
 <script>$(document).ready(function () {

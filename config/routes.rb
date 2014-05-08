@@ -1,24 +1,19 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-  get 'forums/index'
-  end
 
   namespace :admin do
-  get 'forums/new'
+    resources :forums
   end
 
-  namespace :admin do
-  get 'forums/create'
-  end
 
-  namespace :admin do
-  get 'forums/update'
-  end
+  match 'users/login'=>'users#login',:as=>'login',:via=>[:get,:post]
+  match 'users/register'=>'users#register',:as=>'register',:via=>[:get,:post]
+  match 'users/following'=>'users#following',:as=>'following',:via=>[:get]
+  match 'users/logout'=>'users#logout',:as=>'logout',:via=>[:get]
+  match 'users/show'=>'users#register',:as=>'u',:via=>[:get]
 
   resources :followings
   resources :forums
-  resources :usre
 
 
   # The priority is based upon order of creation: first created -> highest priority.
