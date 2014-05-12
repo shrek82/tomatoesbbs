@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
 
 
+  get 'install'=>'install#setting'
   match 'users/login'=>'users#login',:as=>'login',:via=>[:get,:post]
   match 'users/register'=>'users#register',:as=>'register',:via=>[:get,:post]
   match 'users/following'=>'users#following',:as=>'following',:via=>[:get]

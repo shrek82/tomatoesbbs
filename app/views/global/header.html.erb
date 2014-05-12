@@ -1,0 +1,52 @@
+<input type="hidden" id="session" data-user="{&quot;id&quot;:&quot;1030000000094092&quot;,&quot;name&quot;:&quot;seeyoup&quot;,&quot;url&quot;:&quot;http:\/\/segmentfault.com\/u\/seeyoup&quot;,&quot;rank&quot;:&quot;24&quot;}"/>
+
+<!--[if lt IE 9]>
+<div class="error chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+
+<div class="global-nav">
+  <nav class="global-nav container">
+    <a href="###" id="site-nav-btn" class="visible-xs">更多</a>
+    <ul class="site-nav hidden-xs">
+      <li class="hidden-xs current"><a href="<%=root_path %>">首页</a></li>
+      <li class=""><a href="<%= forums_path %>">话题</a></li>
+      <li class=""><a href="http://segmentfault.com/tags">标签</a></li>
+      <li class=""><a href="http://segmentfault.com/users">用户</a></li>
+      <li class=""><a href="http://segmentfault.com/badges">徽章</a></li>
+      <li class=""><a href="http://segmentfault.com/events">活动</a></li>
+    </ul>
+
+
+    <%= render 'global/user_nav_login' %>
+
+
+
+  </nav>
+  <!-- end .global-nav -->
+</div>
+<header class="site-header">
+  <div class="container inner clearfix">
+    <div class="head-name">
+      <a href="http://segmentfault.com/">
+        <span class="head-logo">SegmentFault</span>
+        <strong>问答</strong>
+      </a>
+    </div>
+    <div class="head-search">
+      <form id="search" action="http://segmentfault.com/search">
+        <input type="text" class="form-control text-27 input-search" name="q" autocomplete="off" spellcheck="false" placeholder="搜索问题，标签，用户">
+        <button class="btn-search" type="submit">搜索</button>
+      </form>
+    </div>
+    <ul class="head-nav">
+      <li class="current"><a href="http://segmentfault.com/">技术问答</a></li>
+      <li><a href="http://segmentfault.com/101">新手问答</a></li>
+      <li><a href="http://segmentfault.com/openhw">开源硬件</a></li>
+      <li><a href="http://segmentfault.com/sites">子站问答</a></li>
+    </ul>
+    <div class="head-misc">
+      <span>找不到答案？</span> <a class="btn btn-primary action" href="http://segmentfault.com/ask">+ 提问</a>
+    </div>
+  </div>
+</header>
+<!-- end .site-header -->
