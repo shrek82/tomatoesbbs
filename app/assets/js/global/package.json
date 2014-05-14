@@ -1,0 +1,25 @@
+{
+  "name": "global",
+  "version": "1.1.0",
+  "description": "gobiker global functions",
+  "main": "global.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "global.js"
+  ],
+  "author": "JianGang Zhao <zhaojiangang@gmail.com>",
+  "license": "BSD",
+  "spm": {
+    "alias": {
+      "jquery": "gallery/jquery/1.8.2/jquery",
+      "global": "global/latest/global",
+      "lib": "lib/latest/lib"
+    }
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1"
+  }
+}

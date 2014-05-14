@@ -1018,6 +1018,7 @@ var SF = {params: false};
       })
     }
   })(jQuery);
+
   /* http://mths.be/placeholder v2.0.7 by @mathias */
   (function (t, v, q) {
     var m = "placeholder" in v.createElement("input");

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  get 'test/index'
+
   namespace :admin do
     resources :forums
   end
