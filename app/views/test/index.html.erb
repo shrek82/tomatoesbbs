@@ -37,6 +37,7 @@
         </p>
 
         <div class="form-action">
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
           <span class="left">您将同意并接受<a href="#" target="_blank">《服务条款》</a></span>
           <input type="submit" class="btn btn-primary btn-lg btn-xl" value="注册" successLabel="注册成功" errorLabel="重试" sendingLabel="正在提交...
           "/>
