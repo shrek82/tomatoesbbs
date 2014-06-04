@@ -1,4 +1,4 @@
-/*! global(1.1.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2014-05-14 16:38:55*/
+/*! global(1.1.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2014-05-18 9:14:28*/
 //对global进行扩展
 define("global/1.1.0/comment-debug", [], function(require, exports, module) {
     var comment = {};

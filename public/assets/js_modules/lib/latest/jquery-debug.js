@@ -1,4 +1,4 @@
-/*! lib(1.0.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2013-10-23 16:08:44*/
+/*! lib(1.0.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2014-05-18 9:29:40*/
 define("lib/latest/jquery-debug", [], function(require, exports, module) {
     /*!
    * jQuery JavaScript Library v1.8.2

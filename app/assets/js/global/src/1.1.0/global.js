@@ -3,10 +3,8 @@ define(function (require, exports, module) {
   var lib = require('lib');
   var global = {};
 
+  //底版本浏览器兼容placeholder属性
   require('placeholder')($);
-  $('input, textarea').placeholder();
-
-
 
   //载入某条评论
   global.loadComments = function (query_param) {
@@ -79,7 +77,7 @@ define(function (require, exports, module) {
           if (typeof ueditor != 'undefined') {
             ueditor.setContent('<p></p>');
           }
-          else{
+          else {
             $('#cmt_textarea').val('');
           }
           //载入新评论
@@ -97,9 +95,9 @@ define(function (require, exports, module) {
                 opacity: 0,
                 height: 0
               }).animate({
-                  opacity: 1,
-                  height: height
-                }, 600);
+                opacity: 1,
+                height: height
+              }, 600);
               //$("#cmts_pager").before($(data).css('height','0').animate({height:"68px",opacity: 'toggle'},350));
             }
           });
@@ -110,6 +108,28 @@ define(function (require, exports, module) {
 
   //引入ueditor配置
   global.ueditor_config = require('./ueditor_config');
+
+  //注册ajaxform绑定事件
+  global.bindAjaxForm = function () {
+    $('form.ajaxform').bind('submit', function (e) {
+      e.preventDefault();
+      new lib.ajaxForm($(this), {
+        dataType: 'json',
+        successLabel: '登录成功',
+        sendingLabel: '验证中..',
+        errorLabel: '重试登录',
+        callback: function (data) {
+
+        }
+      }).send();
+    });
+  }
+
+  //页面载入执行方法
+  $(document).ready(function () {
+    $('input, textarea').placeholder();
+    global.bindAjaxForm();
+  });
 
   //返回模块
   module.exports = global;

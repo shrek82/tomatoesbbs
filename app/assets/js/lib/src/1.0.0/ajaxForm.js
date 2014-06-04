@@ -79,13 +79,17 @@ define(function (require, exports, module) {
         return false;
       }
 
-      //提交按钮
-      _this.btn = $('#' + _this.opts.submitButton);
+      //获取提交按钮
+      _this.btn=_this.form.find(':submit');
+      if(!_this.btn.length){
+        _this.btn = $('#' + _this.opts.submitButton);
+      }
       if (!_this.btn.length) {
         alert('未找到提交按钮');
         return false;
       }
 
+      //flash提示框
       _this.flash_msg = fetchObj('flash_msg', function () {
         _this.form.after('<div id="flash_msg"></div>');
       })

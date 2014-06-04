@@ -1,9 +1,9 @@
-/*! global(1.1.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2014-05-14 16:38:55*/
+/*! global(1.1.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2014-05-18 9:14:28*/
 define("global/1.1.0/global", [ "lib/latest/lib", "placeholder", "./ueditor_config" ], function(require, exports, module) {
     var lib = require("lib/latest/lib");
     var global = {};
+    //底版本浏览器兼容placeholder属性
     require("placeholder")($);
-    $("input, textarea").placeholder();
     //载入某条评论
     global.loadComments = function(query_param) {
         $.ajax({
@@ -95,6 +95,24 @@ define("global/1.1.0/global", [ "lib/latest/lib", "placeholder", "./ueditor_conf
     };
     //引入ueditor配置
     global.ueditor_config = require("./ueditor_config");
+    //注册ajaxform绑定事件
+    global.bindAjaxForm = function() {
+        $("form.ajaxform").bind("submit", function(e) {
+            e.preventDefault();
+            new lib.ajaxForm($(this), {
+                dataType: "json",
+                successLabel: "登录成功",
+                sendingLabel: "验证中..",
+                errorLabel: "重试登录",
+                callback: function(data) {}
+            }).send();
+        });
+    };
+    //页面载入执行方法
+    $(document).ready(function() {
+        $("input, textarea").placeholder();
+        global.bindAjaxForm();
+    });
     //返回模块
     module.exports = global;
 });

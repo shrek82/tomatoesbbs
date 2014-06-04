@@ -10,6 +10,5 @@ define(function(require, exports, module) {
   lib.popup=require("./popup");
   lib.Class=require("./class");
   lib.ajaxForm=require("./ajaxForm");
-  lib.placeholder=require("./jquery_placeholder");
 
 });
