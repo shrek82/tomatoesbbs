@@ -1,4 +1,4 @@
-/*! lib(1.0.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2013-10-23 16:08:44*/
+/*! lib(1.0.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2014-05-18 9:29:40*/
 define("lib/latest/ajaxForm-debug", [ "./jquery_form-debug.js" ], function(require, exports, module) {
     //ajax提交插件
     require("./jquery_form-debug")($);
@@ -66,12 +66,16 @@ define("lib/latest/ajaxForm-debug", [ "./jquery_form-debug.js" ], function(requi
                 alert("很抱歉，未找到表单对象!");
                 return false;
             }
-            //提交按钮
-            _this.btn = $("#" + _this.opts.submitButton);
+            //获取提交按钮
+            _this.btn = _this.form.find(":submit");
+            if (!_this.btn.length) {
+                _this.btn = $("#" + _this.opts.submitButton);
+            }
             if (!_this.btn.length) {
                 alert("未找到提交按钮");
                 return false;
             }
+            //flash提示框
             _this.flash_msg = fetchObj("flash_msg", function() {
                 _this.form.after('<div id="flash_msg"></div>');
             });

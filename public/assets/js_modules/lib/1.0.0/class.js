@@ -1,2 +1,151 @@
-/*! lib(1.0.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2013-10-23 16:08:45*/
-define("lib/1.0.0/class",[],function(e,t,r){function a(e){return this instanceof a||!f(e)?void 0:i(e)}function n(e){var t,r;for(t in e)r=e[t],a.Mutators.hasOwnProperty(t)?a.Mutators[t].call(this,r):this.prototype[t]=r}function i(e){return e.extend=a.extend,e.implement=n,e}function o(){}function s(e,t,r){for(var a in t)if(t.hasOwnProperty(a)){if(r&&-1===m(r,a))continue;"prototype"!==a&&(e[a]=t[a])}}r.exports=a,a.create=function(e,t){function r(){e.apply(this,arguments),this.constructor===r&&this.initialize&&this.initialize.apply(this,arguments)}return f(e)||(t=e,e=null),t||(t={}),e||(e=t.Extends||a),t.Extends=e,e!==a&&s(r,e,e.StaticsWhiteList),n.call(r,t),i(r)},a.extend=function(e){return e||(e={}),e.Extends=this,a.create(e)},a.Mutators={Extends:function(e){var t=this.prototype,r=l(e.prototype);s(r,t),r.constructor=this,this.prototype=r,this.superclass=e.prototype},Implements:function(e){c(e)||(e=[e]);for(var t,r=this.prototype;t=e.shift();)s(r,t.prototype||t)},Statics:function(e){s(this,e)}};var l=Object.__proto__?function(e){return{__proto__:e}}:function(e){return o.prototype=e,new o},u=Object.prototype.toString,c=Array.isArray||function(e){return"[object Array]"===u.call(e)},f=function(e){return"[object Function]"===u.call(e)},m=Array.prototype.indexOf?function(e,t){return e.indexOf(t)}:function(e,t){for(var r=0,a=e.length;a>r;r++)if(e[r]===t)return r;return-1}});
+/*! lib(1.0.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2014-05-18 9:29:38*/
+define("lib/1.0.0/class", [], function(require, exports, module) {
+    // Class
+    // -----------------
+    // Thanks to:
+    //  - http://mootools.net/docs/core/Class/Class
+    //  - http://ejohn.org/blog/simple-javascript-inheritance/
+    //  - https://github.com/ded/klass
+    //  - http://documentcloud.github.com/backbone/#Model-extend
+    //  - https://github.com/joyent/node/blob/master/lib/util.js
+    //  - https://github.com/kissyteam/kissy/blob/master/src/seed/src/kissy.js
+    // The base Class implementation.
+    function Class(o) {
+        // Convert existed function to Class.
+        if (!(this instanceof Class) && isFunction(o)) {
+            return classify(o);
+        }
+    }
+    module.exports = Class;
+    // Create a new Class.
+    //
+    //  var SuperPig = Class.create({
+    //    Extends: Animal,
+    //    Implements: Flyable,
+    //    initialize: function() {
+    //      SuperPig.superclass.initialize.apply(this, arguments)
+    //    },
+    //    Statics: {
+    //      COLOR: 'red'
+    //    }
+    // })
+    //
+    Class.create = function(parent, properties) {
+        if (!isFunction(parent)) {
+            properties = parent;
+            parent = null;
+        }
+        properties || (properties = {});
+        parent || (parent = properties.Extends || Class);
+        properties.Extends = parent;
+        // The created class constructor
+        function SubClass() {
+            // Call the parent constructor.
+            parent.apply(this, arguments);
+            // Only call initialize in self constructor.
+            if (this.constructor === SubClass && this.initialize) {
+                this.initialize.apply(this, arguments);
+            }
+        }
+        // Inherit class (static) properties from parent.
+        if (parent !== Class) {
+            mix(SubClass, parent, parent.StaticsWhiteList);
+        }
+        // Add instance properties to the subclass.
+        implement.call(SubClass, properties);
+        // Make subclass extendable.
+        return classify(SubClass);
+    };
+    function implement(properties) {
+        var key, value;
+        for (key in properties) {
+            value = properties[key];
+            if (Class.Mutators.hasOwnProperty(key)) {
+                Class.Mutators[key].call(this, value);
+            } else {
+                this.prototype[key] = value;
+            }
+        }
+    }
+    // Create a sub Class based on `Class`.
+    Class.extend = function(properties) {
+        properties || (properties = {});
+        properties.Extends = this;
+        return Class.create(properties);
+    };
+    function classify(cls) {
+        cls.extend = Class.extend;
+        cls.implement = implement;
+        return cls;
+    }
+    // Mutators define special properties.
+    Class.Mutators = {
+        Extends: function(parent) {
+            var existed = this.prototype;
+            var proto = createProto(parent.prototype);
+            // Keep existed properties.
+            mix(proto, existed);
+            // Enforce the constructor to be what we expect.
+            proto.constructor = this;
+            // Set the prototype chain to inherit from `parent`.
+            this.prototype = proto;
+            // Set a convenience property in case the parent's prototype is
+            // needed later.
+            this.superclass = parent.prototype;
+        },
+        Implements: function(items) {
+            isArray(items) || (items = [ items ]);
+            var proto = this.prototype, item;
+            while (item = items.shift()) {
+                mix(proto, item.prototype || item);
+            }
+        },
+        Statics: function(staticProperties) {
+            mix(this, staticProperties);
+        }
+    };
+    // Shared empty constructor function to aid in prototype-chain creation.
+    function Ctor() {}
+    // See: http://jsperf.com/object-create-vs-new-ctor
+    var createProto = Object.__proto__ ? function(proto) {
+        return {
+            __proto__: proto
+        };
+    } : function(proto) {
+        Ctor.prototype = proto;
+        return new Ctor();
+    };
+    // Helpers
+    // ------------
+    function mix(r, s, wl) {
+        // Copy "all" properties including inherited ones.
+        for (var p in s) {
+            if (s.hasOwnProperty(p)) {
+                if (wl && indexOf(wl, p) === -1) continue;
+                // 在 iPhone 1 代等设备的 Safari 中，prototype 也会被枚举出来，需排除
+                if (p !== "prototype") {
+                    r[p] = s[p];
+                }
+            }
+        }
+    }
+    var toString = Object.prototype.toString;
+    var isArray = Array.isArray || function(val) {
+        return toString.call(val) === "[object Array]";
+    };
+    var isFunction = function(val) {
+        return toString.call(val) === "[object Function]";
+    };
+    var indexOf = Array.prototype.indexOf ? function(arr, item) {
+        return arr.indexOf(item);
+    } : function(arr, item) {
+        for (var i = 0, len = arr.length; i < len; i++) {
+            if (arr[i] === item) {
+                return i;
+            }
+        }
+        return -1;
+    };
+});
+
+

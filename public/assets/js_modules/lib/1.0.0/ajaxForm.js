@@ -1,2 +1,1181 @@
-/*! lib(1.0.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2013-10-23 16:08:45*/
-define("lib/1.0.0/ajaxForm",["./jquery_form.js"],function(t,r,a){function n(e){var t;return("object"==(t=typeof e)?null==e&&"null"||Object.prototype.toString.call(e).slice(8,-1):t).toLowerCase()}function o(e,t){var r=$("#"+e);return r.length?r:("function"==typeof t&&t(),r=$("#"+e),r.length?r:(log("\u5bf9\u8c61"+e+"\u83b7\u53d6\u5931\u8d25"),!1))}function i(t,r){var a=this;this.form="string"==typeof t?$("#"+t):t,this.btn=!1,this.flash_msg=!1,this.opts=$.extend({},{dataType:"json",timeout:3e3,clearForm:!1,tool:!0,errorDisplayType:"formError",loading:!1,redirect:!1,auto_redirect_to:!0,auto_redirect_delay:600,callback:!1,before:!1,error:!1,submitButton:"submit_button",successLabel:"\u63d0\u4ea4\u6210\u529f",sendingLabel:"\u53d1\u9001\u4e2d",errorLabel:"\u91cd\u8bd5"},r),this.opts.before=function(){return"function"==typeof r.before&&r.before(),a.form.length?(a.btn=$("#"+a.opts.submitButton),a.btn.length?(a.flash_msg=o("flash_msg",function(){a.form.after('<div id="flash_msg"></div>')}),a._format=o("_format",function(){a.form.after('<input type="hidden" id="_format" name="_format" value="'+a.opts.dataType+'">')}),"INPUT"==a.btn.get(0).tagName?a.btn.attr("disabled",!0).attr("value",a.opts.sendingLabel):"BUTTON"==a.btn.get(0).tagName&&a.btn.attr("disabled",!0).html('<i class="icon-refresh icon-spin"></i>&nbsp;'+a.opts.sendingLabel),void 0):(alert("\u672a\u627e\u5230\u63d0\u4ea4\u6309\u94ae"),!1)):(alert("\u5f88\u62b1\u6b49\uff0c\u672a\u627e\u5230\u8868\u5355\u5bf9\u8c61!"),!1)},this.opts.success=function(t){var r=!1,o=null;if("json"==a.opts.dataType&&t.error){r=!0;var i=[],s=[],l=n(t.error);if("string"===l)i.push(t.error);else if("array"===l)i=t.error;else if("object"===l)for(k in t.error)if(s.push(k),"array"===n(t.error[k]))for(x in t.error[k])i.push(t.error[k][x]);else i.push(t.error[k]);o="<ul>";for(e in i)o+="<li>"+i[e]+"</li>";o+="</ul>"}if(r){"INPUT"==a.btn.get(0).tagName?(a.btn.attr("disabled",!1),a.btn.attr("value",a.opts.errorLabel)):"BUTTON"==a.btn.get(0).tagName&&(a.btn.attr("disabled",!1),a.btn.html(a.opts.errorLabel));for(k in s);"formError"==a.opts.errorDisplayType?(a.flash_msg.addClass("alert alert-block"),a.flash_msg.html(o).fadeIn(),setTimeout(function(){a.flash_msg.fadeOut(function(){for(k in s);})},4e3)):"alert"==a.opts.errorDisplayType?(a.flash_msg.html(""),alert(o)):"dialogbox"==a.opts.errorDisplayType?(a.flash_msg.html(""),alert(o)):alert(o)}else{if("INPUT"==a.btn.get(0).tagName?a.btn.attr("value",a.opts.successLabel):"BUTTON"==a.btn.get(0).tagName&&a.btn.html('<i class="icon-ok"></i>&nbsp;'+a.opts.successLabel),a.flash_msg.remove(),a.opts.redirect)return window.location.href=a.opts.redirect,!1;if("function"==typeof a.opts.callback&&a.opts.callback(t),"json"==a.opts.dataType&&a.opts.auto_redirect_to&&t.redirect_to)return"INPUT"==a.btn.get(0).tagName?(a.btn.attr("disabled",!0),a.btn.attr("value",a.opts.successLabel)):"BUTTON"==a.btn.get(0).tagName&&(a.btn.attr("disabled",!0),a.btn.html(a.opts.successLabel)),setTimeout(function(){window.location.href=t.redirect_to},a.opts.auto_redirect_delay),!1}a.btn.attr("disabled",!1)},this.opts.error=function(e){"INPUT"==a.btn.get(0).tagName?(a.btn.attr("disabled",!1),a.btn.attr("value",a.opts.errorLabel)):"BUTTON"==a.btn.get(0).tagName&&(a.btn.attr("disabled",!1),a.btn.html(a.opts.errorLabel)),a.flash_msg.addClass("alert alert-error"),4==e.readyState&&0==e.status&&a.flash_msg.html("\u5f88\u62b1\u6b49\uff0c\u8bf7\u6c42\u8d85\u65f6\uff0c\u8bf7\u91cd\u8bd5\u6216\u4e0e\u7ba1\u7406\u5458\u8054\u7cfb!"),4==e.readyState&&200==e.status?a.flash_msg.html("\u7a0b\u5e8f\u51fa\u9519\uff0c\u8bf7\u91cd\u8bd5\u6216\u4e0e\u7ba1\u7406\u5458\u8054\u7cfb!"):a.flash_msg.html("\u5f88\u62b1\u6b49\uff0c\u6570\u636e\u53d1\u9001\u5931\u8d25\uff0c\u53ef\u80fd\u662f\u7a0b\u5e8f\u6709\u95ee\u9898\uff0c\u8bf7\u91cd\u8bd5\u6216\u4e0e\u7ba1\u7406\u5458\u8054\u7cfb\uff01"),a.flash_msg.fadeIn(400),setTimeout(function(){a.flash_msg.fadeOut(400)},1e4)}}t("./jquery_form")($),i.prototype.send=function(){return this.opts.before(),this.form.ajaxSubmit(this.opts),!1},a.exports=i}),define("lib/1.0.0/jquery_form",[],function(){return function(){(function(e){"use strict";function t(t){var r=t.data;t.isDefaultPrevented()||(t.preventDefault(),e(this).ajaxSubmit(r))}function r(t){var r=t.target,a=e(r);if(!a.is(":submit,input:image")){var n=a.closest(":submit");if(0===n.length)return;r=n[0]}var o=this;if(o.clk=r,"image"==r.type)if(void 0!==t.offsetX)o.clk_x=t.offsetX,o.clk_y=t.offsetY;else if("function"==typeof e.fn.offset){var i=a.offset();o.clk_x=t.pageX-i.left,o.clk_y=t.pageY-i.top}else o.clk_x=t.pageX-r.offsetLeft,o.clk_y=t.pageY-r.offsetTop;setTimeout(function(){o.clk=o.clk_x=o.clk_y=null},100)}function a(){if(e.fn.ajaxSubmit.debug){var t="[jquery.form] "+Array.prototype.join.call(arguments,"");window.console&&window.console.log?window.console.log(t):window.opera&&window.opera.postError&&window.opera.postError(t)}}var n={};n.fileapi=void 0!==e("<input type='file'/>").get(0).files,n.formdata=void 0!==window.FormData,e.fn.ajaxSubmit=function(t){function r(r){for(var a=new FormData,n=0;r.length>n;n++)a.append(r[n].name,r[n].value);if(t.extraData)for(var o in t.extraData)t.extraData.hasOwnProperty(o)&&a.append(o,t.extraData[o]);t.data=null;var i=e.extend(!0,{},e.ajaxSettings,t,{contentType:!1,processData:!1,cache:!1,type:"POST"});t.uploadProgress&&(i.xhr=function(){var e=jQuery.ajaxSettings.xhr();return e.upload&&(e.upload.onprogress=function(e){var r=0,a=e.loaded||e.position,n=e.total;e.lengthComputable&&(r=Math.ceil(100*(a/n))),t.uploadProgress(e,a,n,r)}),e}),i.data=null;var s=i.beforeSend;i.beforeSend=function(e,t){t.data=a,s&&s.call(this,e,t)},e.ajax(i)}function o(r){function n(e){var t=e.contentWindow?e.contentWindow.document:e.contentDocument?e.contentDocument:e.document;return t}function o(){function t(){try{var e=n(b).readyState;a("state = "+e),e&&"uninitialized"==e.toLowerCase()&&setTimeout(t,50)}catch(r){a("Server abort: ",r," (",r.name,")"),s(w),T&&clearTimeout(T),T=void 0}}var r=u.attr("target"),o=u.attr("action");j.setAttribute("target",p),i||j.setAttribute("method","POST"),o!=f.url&&j.setAttribute("action",f.url),f.skipEncodingOverride||i&&!/post/i.test(i)||u.attr({encoding:"multipart/form-data",enctype:"multipart/form-data"}),f.timeout&&(T=setTimeout(function(){y=!0,s(_)},f.timeout));var l=[];try{if(f.extraData)for(var c in f.extraData)f.extraData.hasOwnProperty(c)&&l.push(e('<input type="hidden" name="'+c+'">').attr("value",f.extraData[c]).appendTo(j)[0]);f.iframeTarget||(h.appendTo("body"),b.attachEvent?b.attachEvent("onload",s):b.addEventListener("load",s,!1)),setTimeout(t,15),j.submit()}finally{j.setAttribute("action",o),r?j.setAttribute("target",r):u.removeAttr("target"),e(l).remove()}}function s(t){if(!g.aborted&&!O){try{N=n(b)}catch(r){a("cannot access response document: ",r),t=w}if(t===_&&g)return g.abort("timeout"),void 0;if(t==w&&g)return g.abort("server abort"),void 0;if(N&&N.location.href!=f.iframeSrc||y){b.detachEvent?b.detachEvent("onload",s):b.removeEventListener("load",s,!1);var o,i="success";try{if(y)throw"timeout";var l="xml"==f.dataType||N.XMLDocument||e.isXMLDoc(N);if(a("isXml="+l),!l&&window.opera&&(null===N.body||!N.body.innerHTML)&&--A)return a("requeing onLoad callback, DOM not available"),setTimeout(s,250),void 0;var u=N.body?N.body:N.documentElement;g.responseText=u?u.innerHTML:null,g.responseXML=N.XMLDocument?N.XMLDocument:N,l&&(f.dataType="xml"),g.getResponseHeader=function(e){var t={"content-type":f.dataType};return t[e]},u&&(g.status=Number(u.getAttribute("status"))||g.status,g.statusText=u.getAttribute("statusText")||g.statusText);var c=(f.dataType||"").toLowerCase(),d=/(json|script|text)/.test(c);if(d||f.textarea){var p=N.getElementsByTagName("textarea")[0];if(p)g.responseText=p.value,g.status=Number(p.getAttribute("status"))||g.status,g.statusText=p.getAttribute("statusText")||g.statusText;else if(d){var v=N.getElementsByTagName("pre")[0],x=N.getElementsByTagName("body")[0];v?g.responseText=v.textContent?v.textContent:v.innerText:x&&(g.responseText=x.textContent?x.textContent:x.innerText)}}else"xml"==c&&!g.responseXML&&g.responseText&&(g.responseXML=E(g.responseText));try{L=M(g,c,f)}catch(t){i="parsererror",g.error=o=t||i}}catch(t){a("error caught: ",t),i="error",g.error=o=t||i}g.aborted&&(a("upload aborted"),i=null),g.status&&(i=g.status>=200&&300>g.status||304===g.status?"success":"error"),"success"===i?(f.success&&f.success.call(f.context,L,"success",g),m&&e.event.trigger("ajaxSuccess",[g,f])):i&&(void 0===o&&(o=g.statusText),f.error&&f.error.call(f.context,g,i,o),m&&e.event.trigger("ajaxError",[g,f,o])),m&&e.event.trigger("ajaxComplete",[g,f]),m&&!--e.active&&e.event.trigger("ajaxStop"),f.complete&&f.complete.call(f.context,g,i),O=!0,f.timeout&&clearTimeout(T),setTimeout(function(){f.iframeTarget||h.remove(),g.responseXML=null},100)}}}var l,c,f,m,p,h,b,g,v,x,y,T,j=u[0],k=!!e.fn.prop;if(e(":input[name=submit],:input[id=submit]",j).length)return alert('Error: Form elements must not have name or id of "submit".'),void 0;if(r)for(c=0;d.length>c;c++)l=e(d[c]),k?l.prop("disabled",!1):l.removeAttr("disabled");if(f=e.extend(!0,{},e.ajaxSettings,t),f.context=f.context||f,p="jqFormIO"+(new Date).getTime(),f.iframeTarget?(h=e(f.iframeTarget),x=h.attr("name"),x?p=x:h.attr("name",p)):(h=e('<iframe name="'+p+'" src="'+f.iframeSrc+'" />'),h.css({position:"absolute",top:"-1000px",left:"-1000px"})),b=h[0],g={aborted:0,responseText:null,responseXML:null,status:0,statusText:"n/a",getAllResponseHeaders:function(){},getResponseHeader:function(){},setRequestHeader:function(){},abort:function(t){var r="timeout"===t?"timeout":"aborted";a("aborting upload... "+r),this.aborted=1,h.attr("src",f.iframeSrc),g.error=r,f.error&&f.error.call(f.context,g,r,t),m&&e.event.trigger("ajaxError",[g,f,r]),f.complete&&f.complete.call(f.context,g,r)}},m=f.global,m&&0===e.active++&&e.event.trigger("ajaxStart"),m&&e.event.trigger("ajaxSend",[g,f]),f.beforeSend&&f.beforeSend.call(f.context,g,f)===!1)return f.global&&e.active--,void 0;if(!g.aborted){v=j.clk,v&&(x=v.name,x&&!v.disabled&&(f.extraData=f.extraData||{},f.extraData[x]=v.value,"image"==v.type&&(f.extraData[x+".x"]=j.clk_x,f.extraData[x+".y"]=j.clk_y)));var _=1,w=2,S=e("meta[name=csrf-token]").attr("content"),D=e("meta[name=csrf-param]").attr("content");D&&S&&(f.extraData=f.extraData||{},f.extraData[D]=S),f.forceSync?o():setTimeout(o,10);var L,N,O,A=50,E=e.parseXML||function(e,t){return window.ActiveXObject?(t=new ActiveXObject("Microsoft.XMLDOM"),t.async="false",t.loadXML(e)):t=(new DOMParser).parseFromString(e,"text/xml"),t&&t.documentElement&&"parsererror"!=t.documentElement.nodeName?t:null},F=e.parseJSON||function(e){return window.eval("("+e+")")},M=function(t,r,a){var n=t.getResponseHeader("content-type")||"",o="xml"===r||!r&&n.indexOf("xml")>=0,i=o?t.responseXML:t.responseText;return o&&"parsererror"===i.documentElement.nodeName&&e.error&&e.error("parsererror"),a&&a.dataFilter&&(i=a.dataFilter(i,r)),"string"==typeof i&&("json"===r||!r&&n.indexOf("json")>=0?i=F(i):("script"===r||!r&&n.indexOf("javascript")>=0)&&e.globalEval(i)),i}}}if(!this.length)return a("ajaxSubmit: skipping submit process - no element selected"),this;var i,s,l,u=this;"function"==typeof t&&(t={success:t}),i=this.attr("method"),s=this.attr("action"),l="string"==typeof s?e.trim(s):"",l=l||window.location.href||"",l&&(l=(l.match(/^([^#]+)/)||[])[1]),t=e.extend(!0,{url:l,success:e.ajaxSettings.success,type:i||"GET",iframeSrc:/^https/i.test(window.location.href||"")?"javascript:false":"about:blank"},t);var c={};if(this.trigger("form-pre-serialize",[this,t,c]),c.veto)return a("ajaxSubmit: submit vetoed via form-pre-serialize trigger"),this;if(t.beforeSerialize&&t.beforeSerialize(this,t)===!1)return a("ajaxSubmit: submit aborted via beforeSerialize callback"),this;var f=t.traditional;void 0===f&&(f=e.ajaxSettings.traditional);var m,d=[],p=this.formToArray(t.semantic,d);if(t.data&&(t.extraData=t.data,m=e.param(t.data,f)),t.beforeSubmit&&t.beforeSubmit(p,this,t)===!1)return a("ajaxSubmit: submit aborted via beforeSubmit callback"),this;if(this.trigger("form-submit-validate",[p,this,t,c]),c.veto)return a("ajaxSubmit: submit vetoed via form-submit-validate trigger"),this;var h=e.param(p,f);m&&(h=h?h+"&"+m:m),"GET"==t.type.toUpperCase()?(t.url+=(t.url.indexOf("?")>=0?"&":"?")+h,t.data=null):t.data=h;var b=[];if(t.resetForm&&b.push(function(){u.resetForm()}),t.clearForm&&b.push(function(){u.clearForm(t.includeHidden)}),!t.dataType&&t.target){var g=t.success||function(){};b.push(function(r){var a=t.replaceTarget?"replaceWith":"html";e(t.target)[a](r).each(g,arguments)})}else t.success&&b.push(t.success);t.success=function(e,r,a){for(var n=t.context||t,o=0,i=b.length;i>o;o++)b[o].apply(n,[e,r,a||u,u])};var v=e("input:file:enabled[value]",this),x=v.length>0,y="multipart/form-data",T=u.attr("enctype")==y||u.attr("encoding")==y,j=n.fileapi&&n.formdata;a("fileAPI :"+j);var k=(x||T)&&!j;t.iframe!==!1&&(t.iframe||k)?t.closeKeepAlive?e.get(t.closeKeepAlive,function(){o(p)}):o(p):(x||T)&&j?r(p):e.ajax(t);for(var _=0;d.length>_;_++)d[_]=null;return this.trigger("form-submit-notify",[this,t]),this},e.fn.ajaxForm=function(n){if(n=n||{},n.delegation=n.delegation&&e.isFunction(e.fn.on),!n.delegation&&0===this.length){var o={s:this.selector,c:this.context};return!e.isReady&&o.s?(a("DOM not ready, queuing ajaxForm"),e(function(){e(o.s,o.c).ajaxForm(n)}),this):(a("terminating; zero elements found by selector"+(e.isReady?"":" (DOM not ready)")),this)}return n.delegation?(e(document).off("submit.form-plugin",this.selector,t).off("click.form-plugin",this.selector,r).on("submit.form-plugin",this.selector,n,t).on("click.form-plugin",this.selector,n,r),this):this.ajaxFormUnbind().bind("submit.form-plugin",n,t).bind("click.form-plugin",n,r)},e.fn.ajaxFormUnbind=function(){return this.unbind("submit.form-plugin click.form-plugin")},e.fn.formToArray=function(t,r){var a=[];if(0===this.length)return a;var o=this[0],i=t?o.getElementsByTagName("*"):o.elements;if(!i)return a;var s,l,u,c,f,m,d;for(s=0,m=i.length;m>s;s++)if(f=i[s],u=f.name)if(t&&o.clk&&"image"==f.type)f.disabled||o.clk!=f||(a.push({name:u,value:e(f).val(),type:f.type}),a.push({name:u+".x",value:o.clk_x},{name:u+".y",value:o.clk_y}));else if(c=e.fieldValue(f,!0),c&&c.constructor==Array)for(r&&r.push(f),l=0,d=c.length;d>l;l++)a.push({name:u,value:c[l]});else if(n.fileapi&&"file"==f.type&&!f.disabled){r&&r.push(f);var p=f.files;if(p.length)for(l=0;p.length>l;l++)a.push({name:u,value:p[l],type:f.type});else a.push({name:u,value:"",type:f.type})}else null!==c&&c!==void 0&&(r&&r.push(f),a.push({name:u,value:c,type:f.type,required:f.required}));if(!t&&o.clk){var h=e(o.clk),b=h[0];u=b.name,u&&!b.disabled&&"image"==b.type&&(a.push({name:u,value:h.val()}),a.push({name:u+".x",value:o.clk_x},{name:u+".y",value:o.clk_y}))}return a},e.fn.formSerialize=function(t){return e.param(this.formToArray(t))},e.fn.fieldSerialize=function(t){var r=[];return this.each(function(){var a=this.name;if(a){var n=e.fieldValue(this,t);if(n&&n.constructor==Array)for(var o=0,i=n.length;i>o;o++)r.push({name:a,value:n[o]});else null!==n&&n!==void 0&&r.push({name:this.name,value:n})}}),e.param(r)},e.fn.fieldValue=function(t){for(var r=[],a=0,n=this.length;n>a;a++){var o=this[a],i=e.fieldValue(o,t);null===i||void 0===i||i.constructor==Array&&!i.length||(i.constructor==Array?e.merge(r,i):r.push(i))}return r},e.fieldValue=function(t,r){var a=t.name,n=t.type,o=t.tagName.toLowerCase();if(void 0===r&&(r=!0),r&&(!a||t.disabled||"reset"==n||"button"==n||("checkbox"==n||"radio"==n)&&!t.checked||("submit"==n||"image"==n)&&t.form&&t.form.clk!=t||"select"==o&&-1==t.selectedIndex))return null;if("select"==o){var i=t.selectedIndex;if(0>i)return null;for(var s=[],l=t.options,u="select-one"==n,c=u?i+1:l.length,f=u?i:0;c>f;f++){var m=l[f];if(m.selected){var d=m.value;if(d||(d=m.attributes&&m.attributes.value&&!m.attributes.value.specified?m.text:m.value),u)return d;s.push(d)}}return s}return e(t).val()},e.fn.clearForm=function(t){return this.each(function(){e("input,select,textarea",this).clearFields(t)})},e.fn.clearFields=e.fn.clearInputs=function(t){var r=/^(?:color|date|datetime|email|month|number|password|range|search|tel|text|time|url|week)$/i;return this.each(function(){var a=this.type,n=this.tagName.toLowerCase();r.test(a)||"textarea"==n?this.value="":"checkbox"==a||"radio"==a?this.checked=!1:"select"==n?this.selectedIndex=-1:t&&(t===!0&&/hidden/.test(a)||"string"==typeof t&&e(this).is(t))&&(this.value="")})},e.fn.resetForm=function(){return this.each(function(){("function"==typeof this.reset||"object"==typeof this.reset&&!this.reset.nodeType)&&this.reset()})},e.fn.enable=function(e){return void 0===e&&(e=!0),this.each(function(){this.disabled=!e})},e.fn.selected=function(t){return void 0===t&&(t=!0),this.each(function(){var r=this.type;if("checkbox"==r||"radio"==r)this.checked=t;else if("option"==this.tagName.toLowerCase()){var a=e(this).parent("select");t&&a[0]&&"select-one"==a[0].type&&a.find("option").selected(!1),this.selected=t}})},e.fn.ajaxSubmit.debug=!1})(jQuery)}});
+/*! lib(1.0.0) - JianGang Zhao <zhaojiangang@gmail.com> - 2014-05-18 9:29:38*/
+define("lib/1.0.0/ajaxForm", [ "./jquery_form.js" ], function(require, exports, module) {
+    //ajax提交插件
+    require("./jquery_form")($);
+    //ajaxForm表单提交
+    //ajaxForm表单提交
+    //jquery.form.js定义的方法检查没有再去定义
+    //原生的选项值有，此处不再做填充和检查
+    //url,action,method,type,success
+    //判断数据类型
+    function getType(o) {
+        var _t;
+        return ((_t = typeof o) == "object" ? o == null && "null" || Object.prototype.toString.call(o).slice(8, -1) : _t).toLowerCase();
+    }
+    //返回一个jquery对象，没有则方法创建并再次返回
+    function fetchObj(id, createFun) {
+        var obj = $("#" + id);
+        if (obj.length) {
+            return obj;
+        } else if (typeof createFun == "function") {
+            createFun();
+        }
+        obj = $("#" + id);
+        if (obj.length) {
+            return obj;
+        } else {
+            log("对象" + id + "获取失败");
+            return false;
+        }
+    }
+    function ajaxForm(form, opts) {
+        var _this = this;
+        //jquery表单对象
+        this.form = typeof form == "string" ? $("#" + form) : form;
+        //提交按钮
+        this.btn = false;
+        //提交状体提示框
+        this.flash_msg = false;
+        //继承参数
+        this.opts = $.extend({}, {
+            dataType: "json",
+            timeout: 3e3,
+            clearForm: false,
+            tool: true,
+            errorDisplayType: "formError",
+            loading: false,
+            redirect: false,
+            auto_redirect_to: true,
+            auto_redirect_delay: 600,
+            callback: false,
+            before: false,
+            error: false,
+            submitButton: "submit_button",
+            successLabel: "提交成功",
+            sendingLabel: "发送中",
+            errorLabel: "重试"
+        }, opts);
+        //ajaxSubmit提交前执行
+        this.opts.before = function() {
+            //提交前先执行用户定义的方法
+            if (typeof opts.before == "function") {
+                opts.before();
+            }
+            //提交状态提示框
+            if (!_this.form.length) {
+                alert("很抱歉，未找到表单对象!");
+                return false;
+            }
+            //获取提交按钮
+            _this.btn = _this.form.find(":submit");
+            if (!_this.btn.length) {
+                _this.btn = $("#" + _this.opts.submitButton);
+            }
+            if (!_this.btn.length) {
+                alert("未找到提交按钮");
+                return false;
+            }
+            //flash提示框
+            _this.flash_msg = fetchObj("flash_msg", function() {
+                _this.form.after('<div id="flash_msg"></div>');
+            });
+            _this._format = fetchObj("_format", function() {
+                _this.form.after('<input type="hidden" id="_format" name="_format" value="' + _this.opts.dataType + '">');
+            });
+            //让提交按钮暂时不可用，并显示发送状态
+            if (_this.btn.get(0).tagName == "INPUT") {
+                _this.btn.attr("disabled", true).attr("value", _this.opts.sendingLabel);
+            } else if (_this.btn.get(0).tagName == "BUTTON") {
+                _this.btn.attr("disabled", true).html('<i class="icon-refresh icon-spin"></i>&nbsp;' + _this.opts.sendingLabel);
+            }
+        };
+        //请求成功
+        this.opts.success = function(data) {
+            var is_error = false;
+            var html_errors = null;
+            //判断请求结果是否包含警告或错误(用户错误)
+            if (_this.opts.dataType == "json" && data.error) {
+                is_error = true;
+                //错误信息
+                var errors_message = new Array();
+                //出错的表单元素
+                var error_element_ids = new Array();
+                var error_type = getType(data.error);
+                if (error_type === "string") {
+                    errors_message.push(data.error);
+                } else if (error_type === "array") {
+                    errors_message = data.error;
+                } else if (error_type === "object") {
+                    for (k in data.error) {
+                        error_element_ids.push(k);
+                        if (getType(data.error[k]) === "array") {
+                            for (x in data.error[k]) {
+                                errors_message.push(data.error[k][x]);
+                            }
+                        } else {
+                            errors_message.push(data.error[k]);
+                        }
+                    }
+                }
+                html_errors = "<ul>";
+                for (e in errors_message) {
+                    html_errors += "<li>" + errors_message[e] + "</li>";
+                }
+                html_errors += "</ul>";
+            }
+            //返回正确内容-----------------------------------------------------
+            if (!is_error) {
+                //重置按钮
+                if (_this.btn.get(0).tagName == "INPUT") {
+                    _this.btn.attr("value", _this.opts.successLabel);
+                } else if (_this.btn.get(0).tagName == "BUTTON") {
+                    _this.btn.html('<i class="icon-ok"></i>&nbsp;' + _this.opts.successLabel);
+                }
+                //移除消息框
+                _this.flash_msg.remove();
+                //成功后调整到某一个页面
+                if (_this.opts.redirect) {
+                    window.location.href = _this.opts.redirect;
+                    return false;
+                }
+                //用户自定义成功后方法
+                if (typeof _this.opts.callback == "function") {
+                    _this.opts.callback(data);
+                }
+                //json返回包含跳转地址，可自动调整
+                if (_this.opts.dataType == "json" && _this.opts.auto_redirect_to && data.redirect_to) {
+                    if (_this.btn.get(0).tagName == "INPUT") {
+                        _this.btn.attr("disabled", true);
+                        _this.btn.attr("value", _this.opts.successLabel);
+                    } else if (_this.btn.get(0).tagName == "BUTTON") {
+                        _this.btn.attr("disabled", true);
+                        _this.btn.html(_this.opts.successLabel);
+                    }
+                    setTimeout(function() {
+                        window.location.href = data.redirect_to;
+                    }, _this.opts.auto_redirect_delay);
+                    return false;
+                }
+            } else {
+                if (_this.btn.get(0).tagName == "INPUT") {
+                    _this.btn.attr("disabled", false);
+                    _this.btn.attr("value", _this.opts.errorLabel);
+                } else if (_this.btn.get(0).tagName == "BUTTON") {
+                    _this.btn.attr("disabled", false);
+                    _this.btn.html(_this.opts.errorLabel);
+                }
+                //原色闪烁提示
+                for (k in error_element_ids) {}
+                //在表单底部提示错误
+                if (_this.opts.errorDisplayType == "formError") {
+                    _this.flash_msg.addClass("alert alert-block");
+                    _this.flash_msg.html(html_errors).fadeIn();
+                    setTimeout(function() {
+                        _this.flash_msg.fadeOut(function() {
+                            for (k in error_element_ids) {}
+                        });
+                    }, 4e3);
+                } else if (_this.opts.errorDisplayType == "alert") {
+                    _this.flash_msg.html("");
+                    alert(html_errors);
+                } else if (_this.opts.errorDisplayType == "dialogbox") {
+                    _this.flash_msg.html("");
+                    alert(html_errors);
+                } else {
+                    alert(html_errors);
+                }
+            }
+            //重新激活重试提交
+            _this.btn.attr("disabled", false);
+        };
+        //请求错误信息
+        this.opts.error = function(xhr) {
+            if (_this.btn.get(0).tagName == "INPUT") {
+                _this.btn.attr("disabled", false);
+                _this.btn.attr("value", _this.opts.errorLabel);
+            } else if (_this.btn.get(0).tagName == "BUTTON") {
+                _this.btn.attr("disabled", false);
+                _this.btn.html(_this.opts.errorLabel);
+            }
+            _this.flash_msg.addClass("alert alert-error");
+            if (xhr.readyState == 4 && xhr.status == 0) {
+                _this.flash_msg.html("很抱歉，请求超时，请重试或与管理员联系!");
+            }
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                _this.flash_msg.html("程序出错，请重试或与管理员联系!");
+            } else {
+                _this.flash_msg.html("很抱歉，数据发送失败，可能是程序有问题，请重试或与管理员联系！");
+            }
+            _this.flash_msg.fadeIn(400);
+            setTimeout(function() {
+                _this.flash_msg.fadeOut(400);
+            }, 1e4);
+        };
+    }
+    //ajax提交表单
+    ajaxForm.prototype.send = function() {
+        this.opts.before();
+        this.form.ajaxSubmit(this.opts);
+        return false;
+    };
+    module.exports = ajaxForm;
+});
+
+define("lib/1.0.0/jquery_form", [], function(require, exports, moudles) {
+    return function(jquery) {
+        (function($) {
+            "use strict";
+            /*
+       Usage Note:
+       -----------
+       Do not use both ajaxSubmit and ajaxForm on the same form.  These
+       functions are mutually exclusive.  Use ajaxSubmit if you want
+       to bind your own submit handler to the form.  For example,
+
+       $(document).ready(function() {
+       $('#myForm').on('submit', function(e) {
+       e.preventDefault(); // <-- important
+       $(this).ajaxSubmit({
+       target: '#output'
+       });
+       });
+       });
+
+       Use ajaxForm when you want the plugin to manage all the event binding
+       for you.  For example,
+
+       $(document).ready(function() {
+       $('#myForm').ajaxForm({
+       target: '#output'
+       });
+       });
+
+       You can also use ajaxForm with delegation (requires jQuery v1.7+), so the
+       form does not have to exist when you invoke ajaxForm:
+
+       $('#myForm').ajaxForm({
+       delegation: true,
+       target: '#output'
+       });
+
+       When using ajaxForm, the ajaxSubmit function will be invoked for you
+       at the appropriate time.
+       */
+            /**
+       * Feature detection
+       */
+            var feature = {};
+            feature.fileapi = $("<input type='file'/>").get(0).files !== undefined;
+            feature.formdata = window.FormData !== undefined;
+            /**
+       * ajaxSubmit() provides a mechanism for immediately submitting
+       * an HTML form using AJAX.
+       */
+            $.fn.ajaxSubmit = function(options) {
+                /*jshint scripturl:true */
+                // fast fail if nothing selected (http://dev.jquery.com/ticket/2752)
+                if (!this.length) {
+                    log("ajaxSubmit: skipping submit process - no element selected");
+                    return this;
+                }
+                var method, action, url, $form = this;
+                if (typeof options == "function") {
+                    options = {
+                        success: options
+                    };
+                }
+                method = this.attr("method");
+                action = this.attr("action");
+                url = typeof action === "string" ? $.trim(action) : "";
+                url = url || window.location.href || "";
+                if (url) {
+                    // clean url (don't include hash vaue)
+                    url = (url.match(/^([^#]+)/) || [])[1];
+                }
+                options = $.extend(true, {
+                    url: url,
+                    success: $.ajaxSettings.success,
+                    type: method || "GET",
+                    iframeSrc: /^https/i.test(window.location.href || "") ? "javascript:false" : "about:blank"
+                }, options);
+                // hook for manipulating the form data before it is extracted;
+                // convenient for use with rich editors like tinyMCE or FCKEditor
+                var veto = {};
+                this.trigger("form-pre-serialize", [ this, options, veto ]);
+                if (veto.veto) {
+                    log("ajaxSubmit: submit vetoed via form-pre-serialize trigger");
+                    return this;
+                }
+                // provide opportunity to alter form data before it is serialized
+                if (options.beforeSerialize && options.beforeSerialize(this, options) === false) {
+                    log("ajaxSubmit: submit aborted via beforeSerialize callback");
+                    return this;
+                }
+                var traditional = options.traditional;
+                if (traditional === undefined) {
+                    traditional = $.ajaxSettings.traditional;
+                }
+                var elements = [];
+                var qx, a = this.formToArray(options.semantic, elements);
+                if (options.data) {
+                    options.extraData = options.data;
+                    qx = $.param(options.data, traditional);
+                }
+                // give pre-submit callback an opportunity to abort the submit
+                if (options.beforeSubmit && options.beforeSubmit(a, this, options) === false) {
+                    log("ajaxSubmit: submit aborted via beforeSubmit callback");
+                    return this;
+                }
+                // fire vetoable 'validate' event
+                this.trigger("form-submit-validate", [ a, this, options, veto ]);
+                if (veto.veto) {
+                    log("ajaxSubmit: submit vetoed via form-submit-validate trigger");
+                    return this;
+                }
+                var q = $.param(a, traditional);
+                if (qx) {
+                    q = q ? q + "&" + qx : qx;
+                }
+                if (options.type.toUpperCase() == "GET") {
+                    options.url += (options.url.indexOf("?") >= 0 ? "&" : "?") + q;
+                    options.data = null;
+                } else {
+                    options.data = q;
+                }
+                var callbacks = [];
+                if (options.resetForm) {
+                    callbacks.push(function() {
+                        $form.resetForm();
+                    });
+                }
+                if (options.clearForm) {
+                    callbacks.push(function() {
+                        $form.clearForm(options.includeHidden);
+                    });
+                }
+                // perform a load on the target only if dataType is not provided
+                if (!options.dataType && options.target) {
+                    var oldSuccess = options.success || function() {};
+                    callbacks.push(function(data) {
+                        var fn = options.replaceTarget ? "replaceWith" : "html";
+                        $(options.target)[fn](data).each(oldSuccess, arguments);
+                    });
+                } else if (options.success) {
+                    callbacks.push(options.success);
+                }
+                options.success = function(data, status, xhr) {
+                    // jQuery 1.4+ passes xhr as 3rd arg
+                    var context = options.context || options;
+                    // jQuery 1.4+ supports scope context
+                    for (var i = 0, max = callbacks.length; i < max; i++) {
+                        callbacks[i].apply(context, [ data, status, xhr || $form, $form ]);
+                    }
+                };
+                // are there files to upload?
+                var fileInputs = $("input:file:enabled[value]", this);
+                // [value] (issue #113)
+                var hasFileInputs = fileInputs.length > 0;
+                var mp = "multipart/form-data";
+                var multipart = $form.attr("enctype") == mp || $form.attr("encoding") == mp;
+                var fileAPI = feature.fileapi && feature.formdata;
+                log("fileAPI :" + fileAPI);
+                var shouldUseFrame = (hasFileInputs || multipart) && !fileAPI;
+                // options.iframe allows user to force iframe mode
+                // 06-NOV-09: now defaulting to iframe mode if file input is detected
+                if (options.iframe !== false && (options.iframe || shouldUseFrame)) {
+                    // hack to fix Safari hang (thanks to Tim Molendijk for this)
+                    // see:  http://groups.google.com/group/jquery-dev/browse_thread/thread/36395b7ab510dd5d
+                    if (options.closeKeepAlive) {
+                        $.get(options.closeKeepAlive, function() {
+                            fileUploadIframe(a);
+                        });
+                    } else {
+                        fileUploadIframe(a);
+                    }
+                } else if ((hasFileInputs || multipart) && fileAPI) {
+                    fileUploadXhr(a);
+                } else {
+                    $.ajax(options);
+                }
+                // clear element array
+                for (var k = 0; k < elements.length; k++) elements[k] = null;
+                // fire 'notify' event
+                this.trigger("form-submit-notify", [ this, options ]);
+                return this;
+                // XMLHttpRequest Level 2 file uploads (big hat tip to francois2metz)
+                function fileUploadXhr(a) {
+                    var formdata = new FormData();
+                    for (var i = 0; i < a.length; i++) {
+                        formdata.append(a[i].name, a[i].value);
+                    }
+                    if (options.extraData) {
+                        for (var p in options.extraData) if (options.extraData.hasOwnProperty(p)) formdata.append(p, options.extraData[p]);
+                    }
+                    options.data = null;
+                    var s = $.extend(true, {}, $.ajaxSettings, options, {
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        type: "POST"
+                    });
+                    if (options.uploadProgress) {
+                        // workaround because jqXHR does not expose upload property
+                        s.xhr = function() {
+                            var xhr = jQuery.ajaxSettings.xhr();
+                            if (xhr.upload) {
+                                xhr.upload.onprogress = function(event) {
+                                    var percent = 0;
+                                    var position = event.loaded || event.position;
+                                    /*event.position is deprecated*/
+                                    var total = event.total;
+                                    if (event.lengthComputable) {
+                                        percent = Math.ceil(position / total * 100);
+                                    }
+                                    options.uploadProgress(event, position, total, percent);
+                                };
+                            }
+                            return xhr;
+                        };
+                    }
+                    s.data = null;
+                    var beforeSend = s.beforeSend;
+                    s.beforeSend = function(xhr, o) {
+                        o.data = formdata;
+                        if (beforeSend) beforeSend.call(this, xhr, o);
+                    };
+                    $.ajax(s);
+                }
+                // private function for handling file uploads (hat tip to YAHOO!)
+                function fileUploadIframe(a) {
+                    var form = $form[0], el, i, s, g, id, $io, io, xhr, sub, n, timedOut, timeoutHandle;
+                    var useProp = !!$.fn.prop;
+                    if ($(":input[name=submit],:input[id=submit]", form).length) {
+                        // if there is an input with a name or id of 'submit' then we won't be
+                        // able to invoke the submit fn on the form (at least not x-browser)
+                        alert('Error: Form elements must not have name or id of "submit".');
+                        return;
+                    }
+                    if (a) {
+                        // ensure that every serialized input is still enabled
+                        for (i = 0; i < elements.length; i++) {
+                            el = $(elements[i]);
+                            if (useProp) el.prop("disabled", false); else el.removeAttr("disabled");
+                        }
+                    }
+                    s = $.extend(true, {}, $.ajaxSettings, options);
+                    s.context = s.context || s;
+                    id = "jqFormIO" + new Date().getTime();
+                    if (s.iframeTarget) {
+                        $io = $(s.iframeTarget);
+                        n = $io.attr("name");
+                        if (!n) $io.attr("name", id); else id = n;
+                    } else {
+                        $io = $('<iframe name="' + id + '" src="' + s.iframeSrc + '" />');
+                        $io.css({
+                            position: "absolute",
+                            top: "-1000px",
+                            left: "-1000px"
+                        });
+                    }
+                    io = $io[0];
+                    xhr = {
+                        // mock object
+                        aborted: 0,
+                        responseText: null,
+                        responseXML: null,
+                        status: 0,
+                        statusText: "n/a",
+                        getAllResponseHeaders: function() {},
+                        getResponseHeader: function() {},
+                        setRequestHeader: function() {},
+                        abort: function(status) {
+                            var e = status === "timeout" ? "timeout" : "aborted";
+                            log("aborting upload... " + e);
+                            this.aborted = 1;
+                            $io.attr("src", s.iframeSrc);
+                            // abort op in progress
+                            xhr.error = e;
+                            if (s.error) s.error.call(s.context, xhr, e, status);
+                            if (g) $.event.trigger("ajaxError", [ xhr, s, e ]);
+                            if (s.complete) s.complete.call(s.context, xhr, e);
+                        }
+                    };
+                    g = s.global;
+                    // trigger ajax global events so that activity/block indicators work like normal
+                    if (g && 0 === $.active++) {
+                        $.event.trigger("ajaxStart");
+                    }
+                    if (g) {
+                        $.event.trigger("ajaxSend", [ xhr, s ]);
+                    }
+                    if (s.beforeSend && s.beforeSend.call(s.context, xhr, s) === false) {
+                        if (s.global) {
+                            $.active--;
+                        }
+                        return;
+                    }
+                    if (xhr.aborted) {
+                        return;
+                    }
+                    // add submitting element to data if we know it
+                    sub = form.clk;
+                    if (sub) {
+                        n = sub.name;
+                        if (n && !sub.disabled) {
+                            s.extraData = s.extraData || {};
+                            s.extraData[n] = sub.value;
+                            if (sub.type == "image") {
+                                s.extraData[n + ".x"] = form.clk_x;
+                                s.extraData[n + ".y"] = form.clk_y;
+                            }
+                        }
+                    }
+                    var CLIENT_TIMEOUT_ABORT = 1;
+                    var SERVER_ABORT = 2;
+                    function getDoc(frame) {
+                        var doc = frame.contentWindow ? frame.contentWindow.document : frame.contentDocument ? frame.contentDocument : frame.document;
+                        return doc;
+                    }
+                    // Rails CSRF hack (thanks to Yvan Barthelemy)
+                    var csrf_token = $("meta[name=csrf-token]").attr("content");
+                    var csrf_param = $("meta[name=csrf-param]").attr("content");
+                    if (csrf_param && csrf_token) {
+                        s.extraData = s.extraData || {};
+                        s.extraData[csrf_param] = csrf_token;
+                    }
+                    // take a breath so that pending repaints get some cpu time before the upload starts
+                    function doSubmit() {
+                        // make sure form attrs are set
+                        var t = $form.attr("target"), a = $form.attr("action");
+                        // update form attrs in IE friendly way
+                        form.setAttribute("target", id);
+                        if (!method) {
+                            form.setAttribute("method", "POST");
+                        }
+                        if (a != s.url) {
+                            form.setAttribute("action", s.url);
+                        }
+                        // ie borks in some cases when setting encoding
+                        if (!s.skipEncodingOverride && (!method || /post/i.test(method))) {
+                            $form.attr({
+                                encoding: "multipart/form-data",
+                                enctype: "multipart/form-data"
+                            });
+                        }
+                        // support timout
+                        if (s.timeout) {
+                            timeoutHandle = setTimeout(function() {
+                                timedOut = true;
+                                cb(CLIENT_TIMEOUT_ABORT);
+                            }, s.timeout);
+                        }
+                        // look for server aborts
+                        function checkState() {
+                            try {
+                                var state = getDoc(io).readyState;
+                                log("state = " + state);
+                                if (state && state.toLowerCase() == "uninitialized") setTimeout(checkState, 50);
+                            } catch (e) {
+                                log("Server abort: ", e, " (", e.name, ")");
+                                cb(SERVER_ABORT);
+                                if (timeoutHandle) clearTimeout(timeoutHandle);
+                                timeoutHandle = undefined;
+                            }
+                        }
+                        // add "extra" data to form if provided in options
+                        var extraInputs = [];
+                        try {
+                            if (s.extraData) {
+                                for (var n in s.extraData) {
+                                    if (s.extraData.hasOwnProperty(n)) {
+                                        extraInputs.push($('<input type="hidden" name="' + n + '">').attr("value", s.extraData[n]).appendTo(form)[0]);
+                                    }
+                                }
+                            }
+                            if (!s.iframeTarget) {
+                                // add iframe to doc and submit the form
+                                $io.appendTo("body");
+                                if (io.attachEvent) io.attachEvent("onload", cb); else io.addEventListener("load", cb, false);
+                            }
+                            setTimeout(checkState, 15);
+                            form.submit();
+                        } finally {
+                            // reset attrs and remove "extra" input elements
+                            form.setAttribute("action", a);
+                            if (t) {
+                                form.setAttribute("target", t);
+                            } else {
+                                $form.removeAttr("target");
+                            }
+                            $(extraInputs).remove();
+                        }
+                    }
+                    if (s.forceSync) {
+                        doSubmit();
+                    } else {
+                        setTimeout(doSubmit, 10);
+                    }
+                    var data, doc, domCheckCount = 50, callbackProcessed;
+                    function cb(e) {
+                        if (xhr.aborted || callbackProcessed) {
+                            return;
+                        }
+                        try {
+                            doc = getDoc(io);
+                        } catch (ex) {
+                            log("cannot access response document: ", ex);
+                            e = SERVER_ABORT;
+                        }
+                        if (e === CLIENT_TIMEOUT_ABORT && xhr) {
+                            xhr.abort("timeout");
+                            return;
+                        } else if (e == SERVER_ABORT && xhr) {
+                            xhr.abort("server abort");
+                            return;
+                        }
+                        if (!doc || doc.location.href == s.iframeSrc) {
+                            // response not received yet
+                            if (!timedOut) return;
+                        }
+                        if (io.detachEvent) io.detachEvent("onload", cb); else io.removeEventListener("load", cb, false);
+                        var status = "success", errMsg;
+                        try {
+                            if (timedOut) {
+                                throw "timeout";
+                            }
+                            var isXml = s.dataType == "xml" || doc.XMLDocument || $.isXMLDoc(doc);
+                            log("isXml=" + isXml);
+                            if (!isXml && window.opera && (doc.body === null || !doc.body.innerHTML)) {
+                                if (--domCheckCount) {
+                                    // in some browsers (Opera) the iframe DOM is not always traversable when
+                                    // the onload callback fires, so we loop a bit to accommodate
+                                    log("requeing onLoad callback, DOM not available");
+                                    setTimeout(cb, 250);
+                                    return;
+                                }
+                            }
+                            //log('response detected');
+                            var docRoot = doc.body ? doc.body : doc.documentElement;
+                            xhr.responseText = docRoot ? docRoot.innerHTML : null;
+                            xhr.responseXML = doc.XMLDocument ? doc.XMLDocument : doc;
+                            if (isXml) s.dataType = "xml";
+                            xhr.getResponseHeader = function(header) {
+                                var headers = {
+                                    "content-type": s.dataType
+                                };
+                                return headers[header];
+                            };
+                            // support for XHR 'status' & 'statusText' emulation :
+                            if (docRoot) {
+                                xhr.status = Number(docRoot.getAttribute("status")) || xhr.status;
+                                xhr.statusText = docRoot.getAttribute("statusText") || xhr.statusText;
+                            }
+                            var dt = (s.dataType || "").toLowerCase();
+                            var scr = /(json|script|text)/.test(dt);
+                            if (scr || s.textarea) {
+                                // see if user embedded response in textarea
+                                var ta = doc.getElementsByTagName("textarea")[0];
+                                if (ta) {
+                                    xhr.responseText = ta.value;
+                                    // support for XHR 'status' & 'statusText' emulation :
+                                    xhr.status = Number(ta.getAttribute("status")) || xhr.status;
+                                    xhr.statusText = ta.getAttribute("statusText") || xhr.statusText;
+                                } else if (scr) {
+                                    // account for browsers injecting pre around json response
+                                    var pre = doc.getElementsByTagName("pre")[0];
+                                    var b = doc.getElementsByTagName("body")[0];
+                                    if (pre) {
+                                        xhr.responseText = pre.textContent ? pre.textContent : pre.innerText;
+                                    } else if (b) {
+                                        xhr.responseText = b.textContent ? b.textContent : b.innerText;
+                                    }
+                                }
+                            } else if (dt == "xml" && !xhr.responseXML && xhr.responseText) {
+                                xhr.responseXML = toXml(xhr.responseText);
+                            }
+                            try {
+                                data = httpData(xhr, dt, s);
+                            } catch (e) {
+                                status = "parsererror";
+                                xhr.error = errMsg = e || status;
+                            }
+                        } catch (e) {
+                            log("error caught: ", e);
+                            status = "error";
+                            xhr.error = errMsg = e || status;
+                        }
+                        if (xhr.aborted) {
+                            log("upload aborted");
+                            status = null;
+                        }
+                        if (xhr.status) {
+                            // we've set xhr.status
+                            status = xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ? "success" : "error";
+                        }
+                        // ordering of these callbacks/triggers is odd, but that's how $.ajax does it
+                        if (status === "success") {
+                            if (s.success) s.success.call(s.context, data, "success", xhr);
+                            if (g) $.event.trigger("ajaxSuccess", [ xhr, s ]);
+                        } else if (status) {
+                            if (errMsg === undefined) errMsg = xhr.statusText;
+                            if (s.error) s.error.call(s.context, xhr, status, errMsg);
+                            if (g) $.event.trigger("ajaxError", [ xhr, s, errMsg ]);
+                        }
+                        if (g) $.event.trigger("ajaxComplete", [ xhr, s ]);
+                        if (g && !--$.active) {
+                            $.event.trigger("ajaxStop");
+                        }
+                        if (s.complete) s.complete.call(s.context, xhr, status);
+                        callbackProcessed = true;
+                        if (s.timeout) clearTimeout(timeoutHandle);
+                        // clean up
+                        setTimeout(function() {
+                            if (!s.iframeTarget) $io.remove();
+                            xhr.responseXML = null;
+                        }, 100);
+                    }
+                    var toXml = $.parseXML || function(s, doc) {
+                        // use parseXML if available (jQuery 1.5+)
+                        if (window.ActiveXObject) {
+                            doc = new ActiveXObject("Microsoft.XMLDOM");
+                            doc.async = "false";
+                            doc.loadXML(s);
+                        } else {
+                            doc = new DOMParser().parseFromString(s, "text/xml");
+                        }
+                        return doc && doc.documentElement && doc.documentElement.nodeName != "parsererror" ? doc : null;
+                    };
+                    var parseJSON = $.parseJSON || function(s) {
+                        /*jslint evil:true */
+                        return window["eval"]("(" + s + ")");
+                    };
+                    var httpData = function(xhr, type, s) {
+                        // mostly lifted from jq1.4.4
+                        var ct = xhr.getResponseHeader("content-type") || "", xml = type === "xml" || !type && ct.indexOf("xml") >= 0, data = xml ? xhr.responseXML : xhr.responseText;
+                        if (xml && data.documentElement.nodeName === "parsererror") {
+                            if ($.error) $.error("parsererror");
+                        }
+                        if (s && s.dataFilter) {
+                            data = s.dataFilter(data, type);
+                        }
+                        if (typeof data === "string") {
+                            if (type === "json" || !type && ct.indexOf("json") >= 0) {
+                                data = parseJSON(data);
+                            } else if (type === "script" || !type && ct.indexOf("javascript") >= 0) {
+                                $.globalEval(data);
+                            }
+                        }
+                        return data;
+                    };
+                }
+            };
+            /**
+       * ajaxForm() provides a mechanism for fully automating form submission.
+       *
+       * The advantages of using this method instead of ajaxSubmit() are:
+       *
+       * 1: This method will include coordinates for <input type="image" /> elements (if the element
+       *    is used to submit the form).
+       * 2. This method will include the submit element's name/value data (for the element that was
+       *    used to submit the form).
+       * 3. This method binds the submit() method to the form for you.
+       *
+       * The options argument for ajaxForm works exactly as it does for ajaxSubmit.  ajaxForm merely
+       * passes the options argument along after properly binding events for submit elements and
+       * the form itself.
+       */
+            $.fn.ajaxForm = function(options) {
+                options = options || {};
+                options.delegation = options.delegation && $.isFunction($.fn.on);
+                // in jQuery 1.3+ we can fix mistakes with the ready state
+                if (!options.delegation && this.length === 0) {
+                    var o = {
+                        s: this.selector,
+                        c: this.context
+                    };
+                    if (!$.isReady && o.s) {
+                        log("DOM not ready, queuing ajaxForm");
+                        $(function() {
+                            $(o.s, o.c).ajaxForm(options);
+                        });
+                        return this;
+                    }
+                    // is your DOM ready?  http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+                    log("terminating; zero elements found by selector" + ($.isReady ? "" : " (DOM not ready)"));
+                    return this;
+                }
+                if (options.delegation) {
+                    $(document).off("submit.form-plugin", this.selector, doAjaxSubmit).off("click.form-plugin", this.selector, captureSubmittingElement).on("submit.form-plugin", this.selector, options, doAjaxSubmit).on("click.form-plugin", this.selector, options, captureSubmittingElement);
+                    return this;
+                }
+                return this.ajaxFormUnbind().bind("submit.form-plugin", options, doAjaxSubmit).bind("click.form-plugin", options, captureSubmittingElement);
+            };
+            // private event handlers
+            function doAjaxSubmit(e) {
+                /*jshint validthis:true */
+                var options = e.data;
+                if (!e.isDefaultPrevented()) {
+                    // if event has been canceled, don't proceed
+                    e.preventDefault();
+                    $(this).ajaxSubmit(options);
+                }
+            }
+            function captureSubmittingElement(e) {
+                /*jshint validthis:true */
+                var target = e.target;
+                var $el = $(target);
+                if (!$el.is(":submit,input:image")) {
+                    // is this a child element of the submit el?  (ex: a span within a button)
+                    var t = $el.closest(":submit");
+                    if (t.length === 0) {
+                        return;
+                    }
+                    target = t[0];
+                }
+                var form = this;
+                form.clk = target;
+                if (target.type == "image") {
+                    if (e.offsetX !== undefined) {
+                        form.clk_x = e.offsetX;
+                        form.clk_y = e.offsetY;
+                    } else if (typeof $.fn.offset == "function") {
+                        var offset = $el.offset();
+                        form.clk_x = e.pageX - offset.left;
+                        form.clk_y = e.pageY - offset.top;
+                    } else {
+                        form.clk_x = e.pageX - target.offsetLeft;
+                        form.clk_y = e.pageY - target.offsetTop;
+                    }
+                }
+                // clear form vars
+                setTimeout(function() {
+                    form.clk = form.clk_x = form.clk_y = null;
+                }, 100);
+            }
+            // ajaxFormUnbind unbinds the event handlers that were bound by ajaxForm
+            $.fn.ajaxFormUnbind = function() {
+                return this.unbind("submit.form-plugin click.form-plugin");
+            };
+            /**
+       * formToArray() gathers form element data into an array of objects that can
+       * be passed to any of the following ajax functions: $.get, $.post, or load.
+       * Each object in the array has both a 'name' and 'value' property.  An example of
+       * an array for a simple login form might be:
+       *
+       * [ { name: 'username', value: 'jresig' }, { name: 'password', value: 'secret' } ]
+       *
+       * It is this array that is passed to pre-submit callback functions provided to the
+       * ajaxSubmit() and ajaxForm() methods.
+       */
+            $.fn.formToArray = function(semantic, elements) {
+                var a = [];
+                if (this.length === 0) {
+                    return a;
+                }
+                var form = this[0];
+                var els = semantic ? form.getElementsByTagName("*") : form.elements;
+                if (!els) {
+                    return a;
+                }
+                var i, j, n, v, el, max, jmax;
+                for (i = 0, max = els.length; i < max; i++) {
+                    el = els[i];
+                    n = el.name;
+                    if (!n) {
+                        continue;
+                    }
+                    if (semantic && form.clk && el.type == "image") {
+                        // handle image inputs on the fly when semantic == true
+                        if (!el.disabled && form.clk == el) {
+                            a.push({
+                                name: n,
+                                value: $(el).val(),
+                                type: el.type
+                            });
+                            a.push({
+                                name: n + ".x",
+                                value: form.clk_x
+                            }, {
+                                name: n + ".y",
+                                value: form.clk_y
+                            });
+                        }
+                        continue;
+                    }
+                    v = $.fieldValue(el, true);
+                    if (v && v.constructor == Array) {
+                        if (elements) elements.push(el);
+                        for (j = 0, jmax = v.length; j < jmax; j++) {
+                            a.push({
+                                name: n,
+                                value: v[j]
+                            });
+                        }
+                    } else if (feature.fileapi && el.type == "file" && !el.disabled) {
+                        if (elements) elements.push(el);
+                        var files = el.files;
+                        if (files.length) {
+                            for (j = 0; j < files.length; j++) {
+                                a.push({
+                                    name: n,
+                                    value: files[j],
+                                    type: el.type
+                                });
+                            }
+                        } else {
+                            // #180
+                            a.push({
+                                name: n,
+                                value: "",
+                                type: el.type
+                            });
+                        }
+                    } else if (v !== null && typeof v != "undefined") {
+                        if (elements) elements.push(el);
+                        a.push({
+                            name: n,
+                            value: v,
+                            type: el.type,
+                            required: el.required
+                        });
+                    }
+                }
+                if (!semantic && form.clk) {
+                    // input type=='image' are not found in elements array! handle it here
+                    var $input = $(form.clk), input = $input[0];
+                    n = input.name;
+                    if (n && !input.disabled && input.type == "image") {
+                        a.push({
+                            name: n,
+                            value: $input.val()
+                        });
+                        a.push({
+                            name: n + ".x",
+                            value: form.clk_x
+                        }, {
+                            name: n + ".y",
+                            value: form.clk_y
+                        });
+                    }
+                }
+                return a;
+            };
+            /**
+       * Serializes form data into a 'submittable' string. This method will return a string
+       * in the format: name1=value1&amp;name2=value2
+       */
+            $.fn.formSerialize = function(semantic) {
+                //hand off to jQuery.param for proper encoding
+                return $.param(this.formToArray(semantic));
+            };
+            /**
+       * Serializes all field elements in the jQuery object into a query string.
+       * This method will return a string in the format: name1=value1&amp;name2=value2
+       */
+            $.fn.fieldSerialize = function(successful) {
+                var a = [];
+                this.each(function() {
+                    var n = this.name;
+                    if (!n) {
+                        return;
+                    }
+                    var v = $.fieldValue(this, successful);
+                    if (v && v.constructor == Array) {
+                        for (var i = 0, max = v.length; i < max; i++) {
+                            a.push({
+                                name: n,
+                                value: v[i]
+                            });
+                        }
+                    } else if (v !== null && typeof v != "undefined") {
+                        a.push({
+                            name: this.name,
+                            value: v
+                        });
+                    }
+                });
+                //hand off to jQuery.param for proper encoding
+                return $.param(a);
+            };
+            /**
+       * Returns the value(s) of the element in the matched set.  For example, consider the following form:
+       *
+       *  <form><fieldset>
+       *      <input name="A" type="text" />
+       *      <input name="A" type="text" />
+       *      <input name="B" type="checkbox" value="B1" />
+       *      <input name="B" type="checkbox" value="B2"/>
+       *      <input name="C" type="radio" value="C1" />
+       *      <input name="C" type="radio" value="C2" />
+       *  </fieldset></form>
+       *
+       *  var v = $(':text').fieldValue();
+       *  // if no values are entered into the text inputs
+       *  v == ['','']
+       *  // if values entered into the text inputs are 'foo' and 'bar'
+       *  v == ['foo','bar']
+       *
+       *  var v = $(':checkbox').fieldValue();
+       *  // if neither checkbox is checked
+       *  v === undefined
+       *  // if both checkboxes are checked
+       *  v == ['B1', 'B2']
+       *
+       *  var v = $(':radio').fieldValue();
+       *  // if neither radio is checked
+       *  v === undefined
+       *  // if first radio is checked
+       *  v == ['C1']
+       *
+       * The successful argument controls whether or not the field element must be 'successful'
+       * (per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).
+       * The default value of the successful argument is true.  If this value is false the value(s)
+       * for each element is returned.
+       *
+       * Note: This method *always* returns an array.  If no valid value can be determined the
+       *    array will be empty, otherwise it will contain one or more values.
+       */
+            $.fn.fieldValue = function(successful) {
+                for (var val = [], i = 0, max = this.length; i < max; i++) {
+                    var el = this[i];
+                    var v = $.fieldValue(el, successful);
+                    if (v === null || typeof v == "undefined" || v.constructor == Array && !v.length) {
+                        continue;
+                    }
+                    if (v.constructor == Array) $.merge(val, v); else val.push(v);
+                }
+                return val;
+            };
+            /**
+       * Returns the value of the field element.
+       */
+            $.fieldValue = function(el, successful) {
+                var n = el.name, t = el.type, tag = el.tagName.toLowerCase();
+                if (successful === undefined) {
+                    successful = true;
+                }
+                if (successful && (!n || el.disabled || t == "reset" || t == "button" || (t == "checkbox" || t == "radio") && !el.checked || (t == "submit" || t == "image") && el.form && el.form.clk != el || tag == "select" && el.selectedIndex == -1)) {
+                    return null;
+                }
+                if (tag == "select") {
+                    var index = el.selectedIndex;
+                    if (index < 0) {
+                        return null;
+                    }
+                    var a = [], ops = el.options;
+                    var one = t == "select-one";
+                    var max = one ? index + 1 : ops.length;
+                    for (var i = one ? index : 0; i < max; i++) {
+                        var op = ops[i];
+                        if (op.selected) {
+                            var v = op.value;
+                            if (!v) {
+                                // extra pain for IE...
+                                v = op.attributes && op.attributes["value"] && !op.attributes["value"].specified ? op.text : op.value;
+                            }
+                            if (one) {
+                                return v;
+                            }
+                            a.push(v);
+                        }
+                    }
+                    return a;
+                }
+                return $(el).val();
+            };
+            /**
+       * Clears the form data.  Takes the following actions on the form's input fields:
+       *  - input text fields will have their 'value' property set to the empty string
+       *  - select elements will have their 'selectedIndex' property set to -1
+       *  - checkbox and radio inputs will have their 'checked' property set to false
+       *  - inputs of type submit, button, reset, and hidden will *not* be effected
+       *  - button elements will *not* be effected
+       */
+            $.fn.clearForm = function(includeHidden) {
+                return this.each(function() {
+                    $("input,select,textarea", this).clearFields(includeHidden);
+                });
+            };
+            /**
+       * Clears the selected form elements.
+       */
+            $.fn.clearFields = $.fn.clearInputs = function(includeHidden) {
+                var re = /^(?:color|date|datetime|email|month|number|password|range|search|tel|text|time|url|week)$/i;
+                // 'hidden' is not in this list
+                return this.each(function() {
+                    var t = this.type, tag = this.tagName.toLowerCase();
+                    if (re.test(t) || tag == "textarea") {
+                        this.value = "";
+                    } else if (t == "checkbox" || t == "radio") {
+                        this.checked = false;
+                    } else if (tag == "select") {
+                        this.selectedIndex = -1;
+                    } else if (includeHidden) {
+                        // includeHidden can be the valud true, or it can be a selector string
+                        // indicating a special test; for example:
+                        //  $('#myForm').clearForm('.special:hidden')
+                        // the above would clean hidden inputs that have the class of 'special'
+                        if (includeHidden === true && /hidden/.test(t) || typeof includeHidden == "string" && $(this).is(includeHidden)) this.value = "";
+                    }
+                });
+            };
+            /**
+       * Resets the form data.  Causes all form elements to be reset to their original value.
+       */
+            $.fn.resetForm = function() {
+                return this.each(function() {
+                    // guard against an input with the name of 'reset'
+                    // note that IE reports the reset function as an 'object'
+                    if (typeof this.reset == "function" || typeof this.reset == "object" && !this.reset.nodeType) {
+                        this.reset();
+                    }
+                });
+            };
+            /**
+       * Enables or disables any matching elements.
+       */
+            $.fn.enable = function(b) {
+                if (b === undefined) {
+                    b = true;
+                }
+                return this.each(function() {
+                    this.disabled = !b;
+                });
+            };
+            /**
+       * Checks/unchecks any matching checkboxes or radio buttons and
+       * selects/deselects and matching option elements.
+       */
+            $.fn.selected = function(select) {
+                if (select === undefined) {
+                    select = true;
+                }
+                return this.each(function() {
+                    var t = this.type;
+                    if (t == "checkbox" || t == "radio") {
+                        this.checked = select;
+                    } else if (this.tagName.toLowerCase() == "option") {
+                        var $sel = $(this).parent("select");
+                        if (select && $sel[0] && $sel[0].type == "select-one") {
+                            // deselect all other options
+                            $sel.find("option").selected(false);
+                        }
+                        this.selected = select;
+                    }
+                });
+            };
+            // expose debug var
+            $.fn.ajaxSubmit.debug = false;
+            // helper fn for console logging
+            function log() {
+                if (!$.fn.ajaxSubmit.debug) return;
+                var msg = "[jquery.form] " + Array.prototype.join.call(arguments, "");
+                if (window.console && window.console.log) {
+                    window.console.log(msg);
+                } else if (window.opera && window.opera.postError) {
+                    window.opera.postError(msg);
+                }
+            }
+        })(jQuery);
+    };
+});
