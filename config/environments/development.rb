@@ -34,4 +34,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  #需要添加
+  #gem 'rails-i18n', '~> 4.0.0'
+  config.i18n.enforce_available_locales = false
+  config.i18n.available_locales = ["zh-CN"]
 end

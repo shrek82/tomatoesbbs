@@ -1,0 +1,222 @@
+zh-CN:
+  time:
+    formats:
+      default: ! '%Y-%m-%d'
+      long: ! '%Y年%b%d日'
+      short: ! '%b%d日'
+      ming: ! '%b%d日'
+    am: "上午"
+    pm: "下午"
+  date:
+    abbr_day_names: [一, 二, 三, 四, 五, 六, 日]
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    day_names: [星期一, 星期二, 星期三, 星期四, 星期五, 星期六, 星期日]
+    formats:
+      default: ! '%Y-%m-%d'
+      long: ! '%Y年%b%d日'
+      short: ! '%b%d日'
+    month_names: [~, 一月, 二月, 三月, 四月, 五月, 六月, 七月, 八月, 九月, 十月, 十一月, 十二月]
+    order:
+      - :year
+      - :month
+      - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: "约一小时"
+        other: "大约%{count}小时"
+      about_x_months:
+        one: "约一个月"
+        other: "约%{count}个月"
+      about_x_years:
+        one: "约一年"
+        other: "约%{count}年"
+      almost_x_years:
+        one: "接近一年"
+        other: "接近%{count}年"
+      half_a_minute: "半分钟"
+      less_than_x_minutes:
+        one: "不到一分钟"
+        other: "不到%{count}分钟"
+      less_than_x_seconds:
+        one: "一秒"
+        other: "%{count}秒"
+      over_x_years:
+        one: "一年多"
+        other: ! '%{count}年多'
+      x_days:
+        one: "一天"
+        other: ! '%{count}天'
+      x_minutes:
+        one: "一分钟"
+        other: ! '%{count}分钟'
+      x_months:
+        one: "一个月"
+        other: ! '%{count}个月'
+      x_seconds:
+        one: "一秒"
+        other: ! '%{count}秒'
+    prompts:
+      day: "日"
+      hour: "时"
+      minute: "分"
+      month: "月"
+      second: "秒"
+      year: "年"
+  errors: &errors
+    format: ! '%{attribute}%{message}'
+    messages:
+      accepted: "必须是可被接受的"
+      blank: "不能为空"
+      confirmation: "与确认值不匹配"
+      empty: "不能留空"
+      equal_to: "必须等于%{count}"
+      even: "必须为双数"
+      exclusion: "是保留关键字"
+      greater_than: "必须大于%{count}"
+      greater_than_or_equal_to: "必须大于或等于%{count}"
+      inclusion: "不包含于列表中"
+      invalid: "是无效的"
+      less_than: "必须小于 %{count}"
+      less_than_or_equal_to: "必须小于或等于%{count}"
+      not_a_number: "不是数字"
+      not_an_integer: "必须是整数"
+      odd: "必须为单数"
+      record_invalid: ! '验证失败:%{errors}'
+      taken: "已经被使用"
+      too_long: "过长（最长为%{count}个字符）"
+      too_short: "过短（最短为%{count}个字符）"
+      wrong_length: "长度非法（必须为%{count}个字符）"
+    template:
+      body: "如下字段出现错误："
+      header:
+        one: "有1个错误发生导致「%{model}」无法被保存。"
+        other: "有%{count}个错误发生导致「%{model}」无法被保存。"
+  helpers:
+    select:
+      prompt: "请选择"
+    submit:
+      create: "新增%{model}"
+      submit: "储存%{model}"
+      update: "更新%{model}"
+  attributes:
+    created_at: "创建日期"
+    updated_at: "修改日期"
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " 和 "
+      last_word_connector: ", 和 "
+    select:
+      prompt: "请选择"
+  will_paginate:
+    next_label: "下一页"
+    page_entries_info:
+      multi_page: "共%{count}个%{model}"
+      multi_page_html: "正显示%{model}的第<b>%{from}</b>至第<b>%{to}</b>条记录(共<b>%{count}</b>条记录)"
+      single_page:
+        one: "正显示1条%{model}记录"
+        other: "正显示所有共%{count}条%{model}记录"
+        zero: "暂无%{model}记录"
+      single_page_html:
+        one: "正显示<b>1</b>条%{model}记录"
+        other: "正显示所有共<b>%{count}</b>条%{model}记录"
+        zero: "暂无%{model}记录"
+    page_gap: "…"
+    previous_label: "上一页"
+  helpers:
+    submit:
+      #create: "立即发布%{model}"
+      #update: "保存修改%{model}"
+      create: "立即发布"
+      update: "保存修改"
+  activerecord:
+    models:
+      recommend: "推荐设置"
+      comment: "评论"
+      route: "路线"
+      place: "目的地"
+      user: "会员"
+      forum: "论坛"
+      event: "活动"
+      manager: "管理员"
+      guide: "攻略"
+      article: "文章"
+      topic: "话题"
+
+    attributes:
+      forum:
+        name: "版面名称"
+        order_num: "排序"
+        category_id: "分类"
+      topic:
+        title: "标题"
+        user_id: "作者"
+        content: "内容"
+        subject_id: "主题分类"
+        club_id: "俱乐部"
+        forum_id: "所属版块"
+        title_color: "标题颜色"
+      recommend:
+        name: "名称"
+        category: "类型"
+        order_num: "排序"
+        redirect: "跳转地址"
+        intro: "简介"
+      comment:
+        user_id: "作者"
+        content: "评论内容"
+      place:
+        name:  "名称"
+        address: "地址"
+        intro: "简介"
+        province_id: "所属省份"
+        city_id: "所在地区"
+        area_id: "所在区域"
+        tags: "标签"
+        content: "详细说明"
+        user_id: "作者"
+        category_id: "分类"
+        img_path: "图片地址"
+        good_num: "好评数"
+        hits_num: "点击次数"
+        favorites_num: "收藏人数"
+        interested_num: "感兴趣"
+        is_recommended: "是否推荐"
+      user:
+        username: "名称"
+      article:
+        title: "标题"
+        intro: "简介"
+        tags: "标签"
+        category_id: "分类"
+        content: "详情"
+        is_fixed: "置顶"
+        is_recommended: "推荐"
+        user_id: "作者"
+        comments_num: "评论总数"
+        hits_num: "点击次数"
+        img_path: "图片"
+        source: "来源"
+        useful_num: "有用的"
+      guide:
+        title: "标题"
+        intro: "简介"
+        tags: "标签"
+        category_id: "分类"
+        content: "详情"
+        is_fixed: "置顶"
+        is_recommended: "推荐"
+        user_id: "作者"
+        comments_num: "评论总数"
+        hits_num: "点击次数"
+        img_path: "图片"
+        source: "来源"
+        useful_num: "有用的"
+  views:
+      pagination:
+        first: "首页"
+        last: "末页"
+        previous: " &lt; 上一页"
+        next: "下一页 &gt; "
+        truncate: "..."

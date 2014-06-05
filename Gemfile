@@ -41,6 +41,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 #自己添加的包
 
+#多语言
+gem 'rails-i18n', '~> 4.0.0'
+
 #添加完控制台执行
 #rails g settings settings
 gem "rails-settings-cached", "0.4.0"
