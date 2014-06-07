@@ -1,2 +1,44 @@
-<h1>Users#login</h1>
-<p>Find me in app/views/users/login.html.erb</p>
+<div class="container wrap">
+
+  <div class="row min-inner session-edge">
+    <div class="col-xs-12 col-md-offset-1 col-md-10">
+      <h2 class="big-title">登录</h2>
+      <h3 class="slug">最专业的中文开发者技术问答社区</h3>
+      <p class="title-description">如果你有下列任何一个帐号，点击对应按钮登录，无需注册</p>
+
+      <div class="auth-login">
+        <p>
+          <a class="auth-big" href="https://segmentfault.com/user/oauth/google"><i class="i-google-big"></i>Google</a>
+          <a class="auth-big" href="https://segmentfault.com/user/oauth/github"><i class="i-github-big"></i>GitHub</a>
+          <a class="auth-big" href="https://segmentfault.com/user/oauth/weibo"><i class="i-weibo-big"></i>新浪微博</a>
+          <a class="auth-big" href="https://segmentfault.com/user/oauth/qq"><i class="i-qq-big"></i>腾讯QQ</a>
+          <a class="more-arrow" href="###"></a>
+        </p>
+        <p id="more-arrow" class="hidden">
+          <a class="auth-small" href="https://segmentfault.com/user/oauth/twitter"><i class="i-twitter"></i>Twitter</a>
+          <a class="auth-small" href="https://segmentfault.com/user/oauth/facebook"><i class="i-facebook"></i>Facebook</a>
+          <a class="auth-small" href="https://segmentfault.com/user/oauth/renren"><i class="i-renren"></i>人人网</a>
+          <a class="auth-small" href="https://segmentfault.com/user/oauth/douban"><i class="i-douban"></i>豆瓣</a>
+          <a class="auth-small" href="https://segmentfault.com/user/oauth/tqq"><i class="i-tqq"></i>腾讯微博</a>
+        </p>
+      </div>
+
+      <div class="sfid-login">
+        或者使用本站帐号登录 ( <a href="<%= register_path %>">注册</a> 或 <a href="<%= forgot_path %>">找回密码</a> )
+        <form action="<%=login_path%>" method="post">
+          <p>
+            <label for="mail" class="hid">Email 地址</label>
+            <input class="form-control input-lg text-34" type="email" name="mail" placeholder="Email 地址" value="" required="">
+          </p>
+          <p>
+            <label for="password" class="hid">登录密码</label>
+            <input class="form-control input-lg text-34" type="password" name="password" placeholder="登录密码" required="">
+          </p>
+          <button class="btn btn-primary btn-lg btn-xl" type="submit">登录</button>
+          <div class="remember"><input type="checkbox" id="remember" name="remember" value="1" checked=""> <label for="remember">下次自动登录</label></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

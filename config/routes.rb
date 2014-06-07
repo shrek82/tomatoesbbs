@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 
-  get 'test/index'
+  get 'test'=>'test#index'
 
   namespace :admin do
     resources :forums
@@ -10,13 +10,19 @@ Rails.application.routes.draw do
 
   get 'install'=>'install#setting'
   match 'users/login'=>'users#login',:as=>'login',:via=>[:get,:post]
+  match 'user/forgot'=>'users#forgot',:as=>'forgot',:via=>[:get,:post]
   match 'users/register'=>'users#register',:as=>'register',:via=>[:get,:post]
   match 'users/following'=>'users#following',:as=>'following',:via=>[:get]
   match 'users/logout'=>'users#logout',:as=>'logout',:via=>[:get]
   match 'users/show'=>'users#register',:as=>'u',:via=>[:get]
 
   resources :followings
-  resources :forums
+
+  resources :forums do
+  end
+
+  resource :topics
+  resource :comments
 
 
   # The priority is based upon order of creation: first created -> highest priority.

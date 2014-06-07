@@ -36,6 +36,7 @@
 <%= yield :script %>
 
 <script type="text/javascript">
+    var login=true;
     $(document).ready(function () {
         $('input, textarea').placeholder();
         $('input.input-error,textarea.input-error').keyup(function () {
