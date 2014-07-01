@@ -1178,13 +1178,15 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>268 229 214 309 0 0 1280 778 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>190 154 924 485 0 0 1280 778 </string>
+	<string>356 180 924 485 0 0 1280 778 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 194 592 584 0 0 1280 778 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>127 107 1110 326 0 0 1280 778 </string>
+	<string>137 11 1110 651 0 0 1280 778 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 70 1280 651 0 0 1280 778 </string>
+	<key>NeverWarnAboutShortLivedSessions_8E3865F4-34C6-46CC-BF8F-2BA1BBFF7222</key>
+	<true/>
 	<key>NeverWarnAboutShortLivedSessions_E7B00740-6F10-4BEB-AC28-CD826FC37EDA</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -1354,7 +1356,7 @@
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
-			<real>0.56745284795761108</real>
+			<real>0.59915608167648315</real>
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
@@ -1362,7 +1364,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>7.9908285140991211</real>
+			<real>8.782597541809082</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -1891,7 +1893,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.34881657361984253</real>
+			<real>0.34966945648193359</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
@@ -1976,7 +1978,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-05-16T03:30:43Z</date>
+	<date>2014-07-01T02:59:15Z</date>
 	<key>SUSkippedVersion</key>
 	<string>1.0.0.20130622</string>
 	<key>SavePasteHistory</key>
